@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import footer from '../../../assets/images/footer.png';
 
 const Footer = () => {
     return (
-        <div>
+        <div
+            style={{ backgroundImage: `url(${footer})` }}
+            className="bg-cover">
             <footer className="footer md:px-32 p-10 text-base-content flex justify-between">
                 <div>
                     <span className="footer-title">Services</span>
