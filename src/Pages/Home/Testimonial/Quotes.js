@@ -7,8 +7,8 @@ const quotes = ({ testimonial }) => {
             <div className="card-body">
                 <p>{text}</p>
                 <div className='flex items-center gap-5 mt-5'>
-                    <div class="avatar">
-                        <div class="w-[64px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                    <div className="avatar">
+                        <div className="w-[64px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                             <img src={img} alt='' />
                         </div>
                     </div>
