@@ -7,12 +7,11 @@ import Home from './Pages/Home/Home';
 import Login from './Pages/Login/Login/Login';
 import Register from './Pages/Login/Register/Register';
 import Reviews from './Pages/Reviews/Reviews';
-import Footer from './Pages/Shared/Footer/Footer';
 import Header from './Pages/Shared/Header/Header';
 
 function App() {
   return (
-    <div>
+    <div className="max-w-screen-2xl mx-auto">
       <Header />
       <Routes>
         <Route path='/' element={<Home />} />
@@ -23,7 +22,6 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
       </Routes>
-      <Footer />
     </div>
   );
 }

@@ -4,10 +4,10 @@ import footer from '../../../assets/images/footer.png';
 
 const Footer = () => {
     return (
-        <div
+        <footer
             style={{ backgroundImage: `url(${footer})` }}
             className="bg-cover">
-            <footer className="footer md:px-32 p-10 text-base-content flex justify-between">
+            < div className="footer md:px-32 p-10 text-base-content justify-between">
                 <div>
                     <span className="footer-title">Services</span>
                     <Link to='/' className="link link-hover">Emergency Checkup</Link>
@@ -25,11 +25,11 @@ const Footer = () => {
                     <span className="footer-title">OUR ADDRESS</span>
                     <Link to='/' className="link link-hover">New York - 101010 Hudson</Link>
                 </div>
-            </footer>
+            </div>
             <div>
                 <p className='text-center py-5 text-sm'>Copyright 2022 All Rights Reserved</p>
             </div>
-        </div>
+        </footer>
     );
 };
 
