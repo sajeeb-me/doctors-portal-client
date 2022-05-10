@@ -8,7 +8,7 @@ const ContactUs = () => {
     return (
         <div
             style={{ backgroundImage: `url(${appointment})` }}
-            className="my-20 px-4 lg:px-32 h-[533px] bg-cover text-white flex justify-center items-center">
+            className="mt-20 px-4 lg:px-32 h-[533px] bg-cover text-white flex justify-center items-center">
             <div>
                 <div className='text-center'>
                     <h1 className='text-xl text-secondary font-bold'>Contact Us</h1>
