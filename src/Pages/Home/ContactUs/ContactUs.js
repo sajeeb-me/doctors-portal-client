@@ -19,7 +19,7 @@ const ContactUs = () => {
                     <input type="text" placeholder="Subject" className="input w-full mb-3" />
                     <textarea className="textarea w-full" placeholder="Your message"></textarea>
                     <p className='text-center mt-10'>
-                        <input type="submit" className='btn btn-primary px-10 font-bold text-white bg-gradient-to-r from-secondary to-primary' value="Submit" />
+                        <input type="submit" className='btn btn-primary px-10 font-semibold text-white bg-gradient-to-r from-secondary to-primary' value="Submit" />
                     </p>
                 </form>
             </div>
