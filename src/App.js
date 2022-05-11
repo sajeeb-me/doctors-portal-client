@@ -6,6 +6,7 @@ import ContactUs from './Pages/ContactUs/ContactUs';
 import Home from './Pages/Home/Home';
 import Login from './Pages/Login/Login/Login';
 import Register from './Pages/Login/Register/Register';
+import PageLoading from './Pages/PageLoading/PageLoading';
 import Reviews from './Pages/Reviews/Reviews';
 import Header from './Pages/Shared/Header/Header';
 
@@ -21,6 +22,7 @@ function App() {
         <Route path='/contact' element={<ContactUs />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/loading' element={<PageLoading />} />
       </Routes>
     </div>
   );

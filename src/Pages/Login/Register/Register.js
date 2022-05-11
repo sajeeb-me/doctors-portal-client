@@ -1,15 +1,43 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import auth from '../../../firebase.init';
 import SocialMediaLogin from '../SocialMediaLogin/SocialMediaLogin';
+import { useCreateUserWithEmailAndPassword, useSendEmailVerification, useUpdateProfile } from 'react-firebase-hooks/auth';
+import PageLoading from '../../PageLoading/PageLoading';
 
 const Register = () => {
+    const navigate = useNavigate();
 
-    const handleSubmit = e => {
+    const [
+        createUserWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useCreateUserWithEmailAndPassword(auth);
+    const [updateProfile] = useUpdateProfile(auth);
+    const [sendEmailVerification] = useSendEmailVerification(auth);
+
+    useEffect(() => {
+        if (user) {
+            console.log(user);
+            navigate('/')
+        }
+    }, [user, navigate])
+    if (loading) {
+        return <PageLoading />;
+    }
+    if (error) {
+        console.log(error.message);
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const name = e.target.name.value;
         const email = e.target.email.value;
         const password = e.target.password.value;
-        console.log(name, email, password);
+        await createUserWithEmailAndPassword(email, password)
+        await sendEmailVerification();
+        await updateProfile({ displayName: name });
     }
 
     return (
@@ -52,6 +80,13 @@ const Register = () => {
 
                     {/* submit button  */}
                     <input type="submit" value="Sign Up" className="w-full btn btn-primary font-semibold text-white bg-gradient-to-r from-secondary to-primary" />
+                    {/* if loading  */}
+                    {/* {
+                        loading ?
+                            <button className="loading w-full btn btn-primary font-semibold text-white bg-gradient-to-r from-secondary to-primary"></button>
+                            :
+                            <input type="submit" value="Sign Up" className="w-full btn btn-primary font-semibold text-white bg-gradient-to-r from-secondary to-primary" />
+                    } */}
                 </form>
                 <p className='text-sm font-semibold mt-2'>Already have account? <Link to='/login' className='text-primary'>Login now</Link></p>
 

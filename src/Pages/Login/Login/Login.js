@@ -1,14 +1,40 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { Link, useNavigate } from 'react-router-dom';
+import auth from '../../../firebase.init';
+import PageLoading from '../../PageLoading/PageLoading';
 import SocialMediaLogin from '../SocialMediaLogin/SocialMediaLogin';
 
 const Login = () => {
-    const handleSubmit = e => {
+    const navigate = useNavigate();
+
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useSignInWithEmailAndPassword(auth);
+
+    useEffect(() => {
+        if (user) {
+            console.log(user);
+            navigate('/')
+        }
+    }, [user, navigate])
+    if (loading) {
+        return <PageLoading />;
+    }
+    if (error) {
+        console.log(error.message);
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
-        console.log(email, password);
+        await signInWithEmailAndPassword(email, password);
     }
+
     return (
         <section>
             <div className='text-center lg:w-2/6 mx-auto lg:shadow-xl rounded-xl p-10 m-10'>
@@ -36,8 +62,8 @@ const Login = () => {
                         </label>
 
                         {/* forget pass  */}
-                        <p className='text-left mb-3'>
-                            <button className='font-semibold'>Forget password?</button>
+                        <p className='text-left mb-3 font-semibold cursor-pointer'>
+                            Forget password?
                         </p>
                     </div>
 
