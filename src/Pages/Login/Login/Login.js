@@ -4,8 +4,11 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import auth from '../../../firebase.init';
 import PageLoading from '../../PageLoading/PageLoading';
 import SocialMediaLogin from '../SocialMediaLogin/SocialMediaLogin';
+import { useForm } from "react-hook-form";
+import { toast } from 'react-toastify';
 
 const Login = () => {
+    const { register, formState: { errors }, handleSubmit } = useForm();
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -28,29 +31,51 @@ const Login = () => {
         return <PageLoading />;
     }
     if (error) {
-        console.log(error.message);
+        console.log(error.code);
+        switch (error?.code) {
+            case "auth/user-not-found":
+                toast.error("User not found");
+                break;
+            case "auth/wrong-password":
+                toast.error("Wrong password");
+                break;
+            default:
+                toast("Something went wrong")
+        }
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const email = e.target.email.value;
-        const password = e.target.password.value;
+    const onSubmit = async (data) => {
+        const email = data.email;
+        const password = data.password;
         await signInWithEmailAndPassword(email, password);
-    }
+    };
 
     return (
         <section>
             <div className='text-center lg:w-2/6 mx-auto lg:shadow-xl rounded-xl p-10 m-10'>
                 <h1 className='text-2xl font-semibold'>Login</h1>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     {/* email  */}
                     <div className="form-control w-full">
                         <label className="label">
                             <span className="label-text font-semibold">Email</span>
                         </label>
-                        <input type="email" name='email' className="input input-bordered w-full" required />
+                        <input
+                            type="email"
+                            {...register("email", {
+                                required: {
+                                    value: true,
+                                    message: "Email is required"
+                                },
+                                pattern: {
+                                    value: /\S+@\S+\.\S+/,
+                                    message: 'Provide a valid email'
+                                }
+                            })}
+                            className="input input-bordered w-full" />
                         <label className="label">
-                            {/* <span className="label-text-alt">Alt label</span> */}
+                            {errors.email?.type === 'required' && <span className="label-text-alt text-red-500">{errors.email.message}</span>}
+                            {errors.email?.type === 'pattern' && <span className="label-text-alt text-red-500">Provide a valid email</span>}
                         </label>
                     </div>
 
@@ -59,15 +84,23 @@ const Login = () => {
                         <label className="label">
                             <span className="label-text font-semibold">Password</span>
                         </label>
-                        <input type="password" name='password' className="input input-bordered w-full" required />
+                        <input
+                            type="password"
+                            {...register("password", {
+                                required: {
+                                    value: true,
+                                    message: "Password is required"
+                                },
+                                minLength: {
+                                    value: 6,
+                                    message: 'Must be 6 character or longer'
+                                }
+                            })}
+                            className="input input-bordered w-full" />
                         <label className="label">
-                            {/* <span className="label-text-alt">Alt label</span> */}
+                            {errors.password?.type === 'required' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
+                            {errors.password?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
                         </label>
-
-                        {/* forget pass  */}
-                        <p className='text-left mb-3 font-semibold cursor-pointer'>
-                            Forget password?
-                        </p>
                     </div>
 
                     {/* submit button  */}
