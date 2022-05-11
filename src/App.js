@@ -10,6 +10,8 @@ import PageLoading from './Pages/PageLoading/PageLoading';
 import RequireAuth from './Pages/RequireAuth/RequireAuth';
 import Reviews from './Pages/Reviews/Reviews';
 import Header from './Pages/Shared/Header/Header';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -29,6 +31,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/loading' element={<PageLoading />} />
       </Routes>
+      <ToastContainer />
     </div>
   );
 }

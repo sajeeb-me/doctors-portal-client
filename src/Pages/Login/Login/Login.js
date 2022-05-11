@@ -20,7 +20,7 @@ const Login = () => {
 
     useEffect(() => {
         if (user) {
-            console.log(user);
+            // console.log(user);
             navigate(from, { replace: true })
         }
     }, [user, navigate, from])

@@ -19,7 +19,7 @@ const Register = () => {
 
     useEffect(() => {
         if (user) {
-            console.log(user);
+            // console.log(user);
             navigate('/')
         }
     }, [user, navigate])
