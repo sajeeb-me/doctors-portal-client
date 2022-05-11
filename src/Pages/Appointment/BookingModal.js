@@ -1,13 +1,16 @@
 import { format } from 'date-fns';
 import React from 'react';
 
-const BookingModal = ({ treatment, date }) => {
+const BookingModal = ({ treatment, setTreatment, date }) => {
     const { _id, name, slots } = treatment;
 
     const handleSubmit = e => {
         e.preventDefault();
         const slot = e.target.slot.value;
         console.log(_id, name, slot, format(date, 'PP'))
+
+        // to close the modal
+        setTreatment(null)
     }
 
     return (
