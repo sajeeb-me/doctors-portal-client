@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import auth from '../../../firebase.init';
 import PageLoading from '../../PageLoading/PageLoading';
 import SocialMediaLogin from '../SocialMediaLogin/SocialMediaLogin';
 
 const Login = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || '/';
 
     const [
         signInWithEmailAndPassword,
@@ -18,9 +21,9 @@ const Login = () => {
     useEffect(() => {
         if (user) {
             console.log(user);
-            navigate('/')
+            navigate(from, { replace: true })
         }
-    }, [user, navigate])
+    }, [user, navigate, from])
     if (loading) {
         return <PageLoading />;
     }

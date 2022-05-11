@@ -1,13 +1,24 @@
 import { format } from 'date-fns';
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
 
 const BookingModal = ({ treatment, setTreatment, date }) => {
     const { _id, name, slots } = treatment;
+    const [user] = useAuthState(auth)
 
     const handleSubmit = e => {
         e.preventDefault();
-        const slot = e.target.slot.value;
-        console.log(_id, name, slot, format(date, 'PP'))
+        const bookedAppointment = {
+            patientName: user?.displayName,
+            patientEmail: user?.email,
+            patientPhone: e.target.phone.value,
+            appointmentID: _id,
+            treatmentName: name,
+            slot: e.target.slot.value,
+            appointmentDate: format(date, 'PP')
+        }
+        console.log(bookedAppointment)
 
         // to close the modal
         setTreatment(null)
@@ -27,9 +38,9 @@ const BookingModal = ({ treatment, setTreatment, date }) => {
                                 slots.map(slot => <option key={slot} value={slot}>{slot}</option>)
                             }
                         </select>
-                        <input type="text" name='name' placeholder="Full Name" className="input input-bordered w-full mb-4" />
-                        <input type="text" name='phone' placeholder="Phone Number" className="input input-bordered w-full mb-4" />
-                        <input type="email" name='email' placeholder="Email" className="input input-bordered w-full mb-4" />
+                        <input type="text" value={user?.displayName} className="input input-bordered w-full mb-4" readOnly disabled />
+                        <input type="text" name='phone' placeholder="Phone Number" className="input input-bordered w-full mb-4" required />
+                        <input type="email" value={user?.email} className="input input-bordered w-full mb-4" readOnly disabled />
                         <input type="submit" value="SUBMIT" className='btn w-full btn-primary font-semibold text-white bg-gradient-to-r from-secondary to-primary' />
                     </form>
                 </div>
