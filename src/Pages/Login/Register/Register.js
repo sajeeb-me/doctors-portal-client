@@ -5,6 +5,7 @@ import SocialMediaLogin from '../SocialMediaLogin/SocialMediaLogin';
 import { useCreateUserWithEmailAndPassword, useSendEmailVerification, useUpdateProfile } from 'react-firebase-hooks/auth';
 import PageLoading from '../../PageLoading/PageLoading';
 import { useForm } from "react-hook-form";
+import { toast } from 'react-toastify';
 
 const Register = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -29,7 +30,18 @@ const Register = () => {
         return <PageLoading />;
     }
     if (error) {
-        console.log(error.message);
+        // console.log(error.code);
+        switch (error?.code) {
+            case "auth/email-already-in-use":
+                toast.error("Already have account with this email", {
+                    toastId: 1
+                });
+                break;
+            default:
+                toast.error("Something went wrong", {
+                    toastId: 1
+                })
+        }
     }
 
     const onSubmit = async (data) => {

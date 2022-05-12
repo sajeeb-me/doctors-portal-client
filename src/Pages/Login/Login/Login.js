@@ -31,16 +31,22 @@ const Login = () => {
         return <PageLoading />;
     }
     if (error) {
-        console.log(error.code);
+        // console.log(error.code);
         switch (error?.code) {
             case "auth/user-not-found":
-                toast.error("User not found");
+                toast.error("User not found", {
+                    toastId: 1
+                });
                 break;
             case "auth/wrong-password":
-                toast.error("Wrong password");
+                toast.error("Wrong password", {
+                    toastId: 1
+                });
                 break;
             default:
-                toast("Something went wrong")
+                toast.error("Something went wrong", {
+                    toastId: 1
+                })
         }
     }
 

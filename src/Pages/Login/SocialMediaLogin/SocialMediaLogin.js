@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import auth from '../../../firebase.init';
 import PageLoading from '../../PageLoading/PageLoading';
 
@@ -14,7 +15,7 @@ const SocialMediaLogin = () => {
 
     useEffect(() => {
         if (user) {
-            console.log(user);
+            // console.log(user);
             navigate(from, { replace: true })
         }
     }, [user, navigate, from])
@@ -22,7 +23,18 @@ const SocialMediaLogin = () => {
         return <PageLoading />;
     }
     if (error) {
-        console.log(error.message);
+        // console.log(error.code);
+        switch (error?.code) {
+            case "auth/popup-closed-by-user":
+                toast.error("You closed the popup without login", {
+                    toastId: 1
+                });
+                break;
+            default:
+                toast.error("Something went wrong", {
+                    toastId: 1
+                })
+        }
     }
 
     return (

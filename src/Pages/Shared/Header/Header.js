@@ -1,13 +1,18 @@
 import { signOut } from 'firebase/auth';
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
 import PrimaryButton from '../../components/PrimaryButton';
 
 const Header = () => {
-
     const [user] = useAuthState(auth)
+    const navigate = useNavigate()
+
+    const logout = () => {
+        signOut(auth)
+        navigate('/')
+    };
 
     const menuItems = <>
         <li><Link to='/'>Home</Link></li>
@@ -17,7 +22,7 @@ const Header = () => {
         <li><Link to='/contact'>Contact Us</Link></li>
         {
             user ?
-                <button onClick={() => signOut(auth)} className="btn btn-secondary text-white">Logout</button>
+                <button onClick={logout} className="btn btn-secondary text-white">Logout</button>
                 :
                 <Link to='/login'><PrimaryButton>Login</PrimaryButton></Link>
         }
@@ -36,7 +41,7 @@ const Header = () => {
                                 {menuItems}
                             </ul>
                         </div>
-                        <Link to='/'>Doctors Portal</Link>
+                        <Link className='text-xl font-bold' to='/'>Doctors Portal</Link>
                     </div>
                     <div className="navbar-end hidden lg:flex">
                         <ul className="menu menu-horizontal p-0">
