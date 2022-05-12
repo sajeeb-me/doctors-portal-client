@@ -5,19 +5,20 @@ import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
 
 const BookingModal = ({ treatment, setTreatment, date }) => {
-    const { _id, name, slots } = treatment;
-    const [user] = useAuthState(auth)
+    const { name, slots } = treatment;
+    const [user] = useAuthState(auth);
+    const formattedDate = format(date, 'PP')
 
     const handleSubmit = e => {
         e.preventDefault();
+        const slot = e.target.slot.value;
         const bookedAppointment = {
+            treatment: name,
+            date: formattedDate,
+            slot,
+            patient: user?.email,
             patientName: user?.displayName,
-            patientEmail: user?.email,
-            patientPhone: e.target.phone.value,
-            appointmentID: _id,
-            treatmentName: name,
-            slot: e.target.slot.value,
-            appointmentDate: format(date, 'PP')
+            phone: e.target.phone.value,
         }
         // console.log(bookedAppointment)
 
@@ -31,7 +32,7 @@ const BookingModal = ({ treatment, setTreatment, date }) => {
             .then(res => res.json())
             .then(data => {
                 console.log(data)
-                toast.success("Booked appointment successfully!")
+                toast.success(`Appointment is set, ${formattedDate} at ${slot}`)
             })
         // to close the modal
         setTreatment(null)

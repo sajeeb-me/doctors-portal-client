@@ -19,13 +19,11 @@ const Header = () => {
         <li><Link to='/about'>About</Link></li>
         <li><Link to='/appointment'>Appointment</Link></li>
         <li><Link to='/reviews'>Reviews</Link></li>
-        <li><Link to='/contact'>Contact Us</Link></li>
+        <li><Link to='/contact'>Contact</Link></li>
         {
-            user ?
-                <button onClick={logout} className="btn btn-secondary text-white">Logout</button>
-                :
-                <Link to='/login'><PrimaryButton>Login</PrimaryButton></Link>
+            user && <li><Link to='/dashboard'>Dashboard</Link></li>
         }
+
 
     </>
     return (
@@ -43,9 +41,19 @@ const Header = () => {
                         </div>
                         <Link className='text-xl font-bold' to='/'>Doctors Portal</Link>
                     </div>
-                    <div className="navbar-end hidden lg:flex">
+                    <div className="navbar hidden lg:flex">
                         <ul className="menu menu-horizontal p-0">
                             {menuItems}
+                        </ul>
+                    </div>
+                    <div className="navbar-end">
+                        <ul className="menu menu-horizontal p-0">
+                            {
+                                user ?
+                                    <button onClick={logout} className="btn btn-secondary text-white">Logout</button>
+                                    :
+                                    <Link to='/login'><PrimaryButton>Login</PrimaryButton></Link>
+                            }
                         </ul>
                     </div>
                 </div>
