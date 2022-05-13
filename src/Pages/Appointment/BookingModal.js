@@ -31,11 +31,16 @@ const BookingModal = ({ treatment, setTreatment, date }) => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
-                toast.success(`Appointment is set, ${formattedDate} at ${slot}`)
+                // console.log(data)
+                if (data.success) {
+                    toast.success(`Appointment is set, ${formattedDate} at ${slot}`)
+                    // to close the modal
+                    setTreatment(null)
+                }
+                else {
+                    toast.warning(`Already have an appointment on ${data.data?.date} at ${data.data?.slot}`)
+                }
             })
-        // to close the modal
-        setTreatment(null)
     }
 
     return (

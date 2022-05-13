@@ -107,6 +107,7 @@ const Login = () => {
                             {errors.password?.type === 'required' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
                             {errors.password?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
                         </label>
+                        <p className='text-left mb-2'><button onClick={() => navigate('/resetpassword')} className='font-semibold'>Forget password?</button></p>
                     </div>
 
                     {/* submit button  */}

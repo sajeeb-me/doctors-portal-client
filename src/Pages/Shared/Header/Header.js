@@ -27,9 +27,9 @@ const Header = () => {
 
     </>
     return (
-        <div>
+        <div className='bg-base-100 sticky top-0 z-10'>
             <section className='lg:px-20'>
-                <div className="navbar bg-base-100">
+                <div className="navbar">
                     <div className="navbar-start">
                         <div className="dropdown">
                             <label tabIndex="0" className="btn btn-ghost lg:hidden">
