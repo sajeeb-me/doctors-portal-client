@@ -8,9 +8,11 @@ const MyAppointments = () => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:5000/appointment?patient=${user?.email}`)
-            .then(res => res.json())
-            .then(data => setAppointment(data))
+        if (user) {
+            fetch(`http://localhost:5000/appointment?patient=${user?.email}`)
+                .then(res => res.json())
+                .then(data => setAppointment(data))
+        }
     }, [user])
 
     return (
@@ -34,8 +36,8 @@ const MyAppointments = () => {
                         </thead>
                         <tbody>
                             {
-                                appointment.map(a => <tr key={a._id} className='hover'>
-                                    <th>#</th>
+                                appointment.map((a, index) => <tr key={a._id} className='hover'>
+                                    <th>{index + 1}</th>
                                     <td>{a.patientName}</td>
                                     <td>{a.date}</td>
                                     <td>{a.slot}</td>
