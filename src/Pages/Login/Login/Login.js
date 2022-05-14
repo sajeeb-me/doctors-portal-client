@@ -6,6 +6,7 @@ import PageLoading from '../../PageLoading/PageLoading';
 import SocialMediaLogin from '../SocialMediaLogin/SocialMediaLogin';
 import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
+import useToken from '../../../hooks/useToken';
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -20,13 +21,14 @@ const Login = () => {
         loading,
         error,
     ] = useSignInWithEmailAndPassword(auth);
+    const [token] = useToken(user);
 
     useEffect(() => {
-        if (user) {
+        if (token) {
             // console.log(user);
             navigate(from, { replace: true })
         }
-    }, [user, navigate, from])
+    }, [token, navigate, from])
     if (loading) {
         return <PageLoading />;
     }

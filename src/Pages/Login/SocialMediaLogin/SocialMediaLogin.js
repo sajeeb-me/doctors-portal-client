@@ -3,6 +3,7 @@ import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import auth from '../../../firebase.init';
+import useToken from '../../../hooks/useToken';
 import PageLoading from '../../PageLoading/PageLoading';
 
 const SocialMediaLogin = () => {
@@ -12,13 +13,14 @@ const SocialMediaLogin = () => {
     const from = location.state?.from?.pathname || '/';
 
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+    const [token] = useToken(user);
 
     useEffect(() => {
-        if (user) {
+        if (token) {
             // console.log(user);
             navigate(from, { replace: true })
         }
-    }, [user, navigate, from])
+    }, [token, navigate, from])
     if (loading) {
         return <PageLoading />;
     }

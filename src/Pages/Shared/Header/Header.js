@@ -11,6 +11,7 @@ const Header = () => {
 
     const logout = () => {
         signOut(auth)
+        localStorage.removeItem('accessToken')
         navigate('/')
     };
 
@@ -27,7 +28,7 @@ const Header = () => {
 
     </>
     return (
-        <div className='bg-base-100 sticky top-0 z-10'>
+        <div className='bg-base-100 sticky top-0 z-50'>
             <section className='lg:px-20'>
                 <div className="navbar">
                     <div className="navbar-start">

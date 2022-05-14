@@ -6,6 +6,7 @@ import { useCreateUserWithEmailAndPassword, useSendEmailVerification, useUpdateP
 import PageLoading from '../../PageLoading/PageLoading';
 import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
+import useToken from '../../../hooks/useToken';
 
 const Register = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -19,13 +20,14 @@ const Register = () => {
     ] = useCreateUserWithEmailAndPassword(auth);
     const [updateProfile] = useUpdateProfile(auth);
     const [sendEmailVerification] = useSendEmailVerification(auth);
+    const [token] = useToken(user);
 
     useEffect(() => {
-        if (user) {
+        if (token) {
             // console.log(user);
             navigate('/')
         }
-    }, [user, navigate])
+    }, [token, navigate])
     if (loading) {
         return <PageLoading />;
     }
