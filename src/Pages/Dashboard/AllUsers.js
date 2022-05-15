@@ -1,10 +1,26 @@
+import { signOut } from 'firebase/auth';
 import React from 'react';
 import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
+import auth from '../../firebase.init';
 import PageLoading from '../PageLoading/PageLoading';
 import UserRow from './UserRow';
 
 const AllUsers = () => {
-    const { data: users, isLoading } = useQuery('users', () => fetch('http://localhost:5000/user').then(res => res.json()))
+    const navigate = useNavigate();
+    const { data: users, isLoading, refetch } = useQuery('users', () => fetch('http://localhost:5000/user', {
+        method: 'GET',
+        headers: {
+            authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        }
+    }).then(res => {
+        if (res.status === 401 || res.status === 403) {
+            signOut(auth)
+            localStorage.removeItem('accessToken')
+            navigate('/login')
+        }
+        return res.json()
+    }))
     if (isLoading) {
         return <PageLoading />
     }
@@ -19,14 +35,17 @@ const AllUsers = () => {
                             <tr>
                                 <th></th>
                                 <th>Email</th>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Treatment</th>
+                                <th>Make admin</th>
+                                <th>Delete user</th>
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                users.map((user, index) => <UserRow key={user._id} user={user} index={index} />)
+                                users?.map((user, index) => <UserRow
+                                    key={user._id}
+                                    user={user}
+                                    refetch={refetch}
+                                    index={index} />)
                             }
                         </tbody>
                     </table>
