@@ -22,7 +22,7 @@ const BookingModal = ({ treatment, setTreatment, date, refetch }) => {
         }
         // console.log(bookedAppointment)
 
-        fetch('http://localhost:5000/appointment', {
+        fetch('https://secret-hollows-98453.herokuapp.com/appointment', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

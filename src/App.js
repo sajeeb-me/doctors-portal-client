@@ -19,6 +19,8 @@ import ResetPassword from './Pages/Login/ResetPassword/ResetPassword';
 import TreatmentHistory from './Pages/Dashboard/TreatmentHistory';
 import AllUsers from './Pages/Dashboard/AllUsers';
 import RequireAdmin from './Pages/RequireAdmin/RequireAdmin';
+import AddDoctor from './Pages/Dashboard/AddDoctor';
+import ManageDoctors from './Pages/Dashboard/ManageDoctors';
 
 function App() {
   return (
@@ -43,6 +45,16 @@ function App() {
           <Route path='users' element={
             <RequireAdmin>
               <AllUsers />
+            </RequireAdmin>
+          } />
+          <Route path='addDoctor' element={
+            <RequireAdmin>
+              <AddDoctor />
+            </RequireAdmin>
+          } />
+          <Route path='manageDoctor' element={
+            <RequireAdmin>
+              <ManageDoctors />
             </RequireAdmin>
           } />
         </Route>
