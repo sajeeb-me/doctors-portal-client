@@ -9,7 +9,11 @@ import CheckoutForm from './CheckoutForm';
 const Payment = () => {
     const { id } = useParams();
 
-    const { data: appointment, isLoading } = useQuery(['service', id], () => fetch(`http://localhost:5000/appointment/${id}`).then(res => res.json()))
+    const { data: appointment, isLoading } = useQuery(['service', id], () => fetch(`https://secret-hollows-98453.herokuapp.com/appointment/${id}`, {
+        headers: {
+            'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        }
+    }).then(res => res.json()))
     if (isLoading) {
         return <PageLoading />
     }
@@ -26,14 +30,14 @@ const Payment = () => {
                     <div className="card-body">
                         <h1 className='text-secondary font-semibold'>Hello {patientName}</h1>
                         <p className='text-xl font-semibold'>Bill for : {treatment}</p>
-                        <p className='text-sm'>Your appointment <span className='text-rose-600'>{date}</span> at {slot}</p>
+                        <p className='text-sm'>Your appointment <span className='text-primary font-semibold'>{date}</span> at {slot}</p>
                         <p>Please pay : <span className='font-semibold'>${price}</span></p>
                     </div>
                 </div>
                 <div className="card w-full h-48 shadow-xl bg-base-100">
                     <div className="card-body">
                         <Elements stripe={stripePromise}>
-                            <CheckoutForm />
+                            <CheckoutForm appointment={appointment} />
                         </Elements>
                     </div>
                 </div>

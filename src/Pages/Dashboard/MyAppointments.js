@@ -48,6 +48,7 @@ const MyAppointments = () => {
                                 <th>Time</th>
                                 <th>Treatment</th>
                                 <th>Payment</th>
+                                <th>Trans id</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,8 +60,11 @@ const MyAppointments = () => {
                                     <td>{a.slot}</td>
                                     <td>{a.treatment}</td>
                                     <td>
-                                        {(a.price && !a.paid) && <button onClick={() => navigate(`/dashboard/payment/${a._id}`)} className='btn btn-xs btn-success'>Pay</button>}
-                                        {(a.price && a.paid) && <span className='text-success'>Paid</span>}
+                                        {(a.price && !a.paid) && <button onClick={() => navigate(`/dashboard/payment/${a._id}`)} className='btn btn-xs btn-secondary text-white'>Pay</button>}
+                                        {(a.price && a.paid) && <p className='text-secondary font-semibold'>Paid</p>}
+                                    </td>
+                                    <td>
+                                        {(a.transitionId) ? <span className='text-xs'>{a.transitionId}</span> : 'N/A'}
                                     </td>
                                 </tr>)
                             }

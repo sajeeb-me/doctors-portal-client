@@ -6,7 +6,7 @@ import PageLoading from '../PageLoading/PageLoading';
 
 const AddDoctor = () => {
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
-    const { data, isLoading } = useQuery('specialty', () => fetch('http://localhost:5000/service').then(res => res.json()))
+    const { data, isLoading } = useQuery('specialty', () => fetch('https://secret-hollows-98453.herokuapp.com/service').then(res => res.json()))
 
     const imageStorageKey = 'c1e87660595242c0175f82bb850d3e15';
 
@@ -44,7 +44,7 @@ const AddDoctor = () => {
                     }
                     // console.log('doctor',doctor);
                     // send to database
-                    fetch('http://localhost:5000/doctor', {
+                    fetch('https://secret-hollows-98453.herokuapp.com/doctor', {
                         method: 'POST',
                         headers: {
                             'Content-type': 'application/json',
